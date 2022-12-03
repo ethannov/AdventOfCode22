@@ -1,9 +1,11 @@
 def findSharedItem(s1, s2, s3):
     for item1 in s1:
         for item2 in s2:
+            if (item1 != item2):
+                continue
             for item3 in s3:
-                if (item1 == item2 == item3):
-                    # print(item1)
+                if (item1 == item3):
+                    print(item1)
                     return item1
 
 f = open("input.txt")
