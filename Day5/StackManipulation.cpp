@@ -1,16 +1,20 @@
 #include <iostream>
 #include <fstream>
 #include <stack>
+#include <queue>
 #include <vector>
+#include <algorithm>
 using namespace std;
 
 int main () {
     ifstream myfile;
     myfile.open ("input.txt");
+    // myfile.open ("test.txt");
 
     if (myfile.is_open()) {
         string line;
         int nStacks = 9;
+        // int nStacks = 3;
         vector<stack<char>*> stacks;
 
         for (int i=0; i < nStacks; i++) {
@@ -32,12 +36,27 @@ int main () {
                 continue;
             }
 
-            if (line == "") { // ignore empty lines
+            if (line == "") { // reverse stacks
+                for (auto e : stacks) {
+                    queue<char> temp;
+                    int size = e->size();
+                    for (int i=0; i<size; i++) {
+                        temp.push(e->top());
+                        e->pop();
+                    }
+                    for (int i=0; i<size; i++) {
+                            e->push(temp.front());
+                            temp.pop();
+                        }
+                }
                 continue;
             }
             if (line == " 1   2   3   4   5   6   7   8   9 ") { // ignore empty lines
                 continue;
             }
+            // if (line == " 1   2   3 ") { // ignore empty lines
+            //     continue;
+            // }
 
             // perform commands
             int a = line.find_first_of("m") + 5;
@@ -61,6 +80,7 @@ int main () {
         for (auto e: stacks) {
             cout << e->top();
         }
+        cout << "\n";
 
         myfile.close();
     }
