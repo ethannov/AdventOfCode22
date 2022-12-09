@@ -213,6 +213,28 @@ int main() {
         }
     }
 
-    cout << "Answer: " << sum;
+    cout << "Answer: " << sum << "\n";
+
+    // The total disk space available to the filesystem is 70000000. 
+    // To run the update, you need unused space of at least 30000000. 
+    // You need to find a directory you can delete that will free up enough space to run the update.
+    // Find the smallest directory that, if deleted, would free up enough space on the filesystem to run the update. 
+    // What is the total size of that directory?
+    int disk = 70000000;
+    int update = 30000000;
+    int spaceUsed = tree.get_root()->size;
+    int spaceUnused = disk - spaceUsed;
+    int spaceNeeded = update - spaceUnused;
+
+    dir* deleteCandidate = tree.get_root();
+    for (auto e : postorder_dirs) {
+        if (e->size >= spaceNeeded) {
+            if (e->size < deleteCandidate->size) {
+                deleteCandidate = e;
+            }
+        }
+    }
+
+    cout << "Answer: " << deleteCandidate->size << "\n";
     return 0;
 }
