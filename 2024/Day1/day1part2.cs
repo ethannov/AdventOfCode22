@@ -33,18 +33,32 @@ namespace adventOfCodeTest
                     }
                 }
 
-                list1.Sort();
-                list2.Sort();
+                Dictionary<int, int> countDict2 = new Dictionary<int, int>();
+                foreach (int number in list2)
+                {
+                    if (countDict2.ContainsKey(number))
+                    {
+                        countDict2[number]++;
+                    }
+                    else
+                    {
+                        countDict2[number] = 1;
+                    }
+                }
 
-                int sum = 0;
+                int totalSimilarityScore = 0;
 
                 for (int i = 0; i < list1.Count; i++)
                 {
-                    int difference = Math.Abs(list1[i] - list2[i]);
-                    sum += difference;
+                    int similarityScore = 0;
+                    if (countDict2.ContainsKey(list1[i]))
+                    {
+                        similarityScore = list1[i] * countDict2[list1[i]];
+                    }
+                    totalSimilarityScore += similarityScore;
                 }
 
-                Console.WriteLine(sum);
+                Console.WriteLine(totalSimilarityScore);
             }
             catch (Exception ex)
             {
